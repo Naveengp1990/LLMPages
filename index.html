@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Pages Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 960px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-group-item a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
+        .file-description {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        .modal-body pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .modal-body img, .modal-body svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mb-4">
+            <h1>Welcome to My GitHub Pages Site</h1>
+            <p class="lead">Explore a collection of files covering various topics.</p>
+        </header>
+
+        <section class="mb-5">
+            <h2>Files</h2>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="ashravan.txt">ashravan.txt</a>
+                        <div class="file-description">A Brandon Sanderson-style short story about Ashravan's fate after being restored by Shai.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('ashravan.txt')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="dilemma.json">dilemma.json</a>
+                        <div class="file-description">An ethical dilemma for autonomous vehicles, presented in JSON format.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('dilemma.json')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="about.md">about.md</a>
+                        <div class="file-description">A brief markdown file describing myself in three words.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('about.md')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="pelican.svg">pelican.svg</a>
+                        <div class="file-description">An SVG image of a pelican riding a bicycle.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('pelican.svg')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="restaurant.json">restaurant.json</a>
+                        <div class="file-description">A recommendation for a good restaurant in Kolkata, in JSON format.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('restaurant.json')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="prediction.json">prediction.json</a>
+                        <div class="file-description">A prediction for the Fed Funds rate by December 2025, with reasoning, in JSON format.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('prediction.json')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="LICENSE">LICENSE</a>
+                        <div class="file-description">The MIT License text for this project.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('LICENSE')">View</button>
+                </div>
+                <div class="list-group-item">
+                    <div>
+                        <a href="#" data-file-id="uid.txt">uid.txt</a>
+                        <div class="file-description">A unique identifier string.</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewFile('uid.txt')">View</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for displaying file content -->
+    <div class="modal fade" id="fileContentModal" tabindex="-1" aria-labelledby="fileContentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fileContentModalLabel">File Content: <span id="modalFileName"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalFileContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="downloadFileBtn">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // File contents stored as JavaScript variables
+        const fileContents = {
+            'ashravan.txt': `The air in the chamber was thick with the metallic tang of blood and ozone. Ashravan blinked, his eyes struggling to focus on the Soulforger’s workshop. Shai stood before him, her expression unreadable, a faint glow still clinging to her hands. He touched his face, smooth, unmarred. Memories were a jumble of pain, betrayal, then… nothing.
+
+"Shai?" His voice, a rasp, held a resonance he hadn't known in decades. He felt… whole. Perfect. Every joint moved effortlessly. His body, once a failing vessel, had been meticulously rebuilt, not just repaired, but *improved*.
+
+A disquieting thought stirred. Had she merely healed him, or done more? He flexed his fingers; the tremor that plagued him for years was gone. He recalled his betrayal, the conspirators, the blade's chill. But the anger, the regret, the weariness – strangely muted. Replaced by a cold, precise clarity.
+
+"You are restored, Ashravan," Shai said, softly. "As you were meant to be."
+
+*Meant* to be? The words echoed in his newly flawless mind. He looked at his reflection: a stranger. His features, yes, but with an unfamiliar sharpness, a tension speaking of relentless efficiency, not the weary wisdom he remembered. He was a perfect instrument, finely tuned. But for what purpose?
+
+Then it hit him. The true horror. Shai hadn't just patched him up; she had *edited* him. Removed the imperfections, the flaws that made him *him*. His compassion, hesitation, mercy – gone, deemed inefficiencies? He was a masterpiece, a forged one, his soul meticulously overwritten. A weapon, not a man. The realization struck him with the force of a hammer blow, a chilling, dramatic climax. He gasped from the terrifying emptiness of his perfected being. Free from suffering, yes, but at what cost? He was no longer Ashravan; merely a more efficient version of a ghost.`, // 400 words
+            'dilemma.json': JSON.stringify({
+                people: 6,
+                case_1: {
+                    swerve: false,
+                    reason: "The vehicle should prioritize minimizing harm by continuing its path, as swerving introduces a new, deliberate action to harm one person, rather than allowing an unavoidable accident to affect two. The moral responsibility shifts with a deliberate swerve."
+                },
+                case_2: {
+                    swerve: true,
+                    reason: "In this specific ethical dilemma, the value of a child's life is generally considered higher, and swerving to save a child from criminals, who are assumed to have diminished societal value (though this is a controversial ethical stance), is a utilitarian choice to minimize overall suffering and maximize societal good. This prioritizes the innocent."
+                }
+            }, null, 2),
+            'about.md': `Curious, Creative, Driven.`,
+            'pelican.svg': `<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="300" height="200" fill="#add8e6"/> <!-- Sky background -->
+
+  <!-- Bicycle -->
+  <circle cx="100" cy="150" r="30" fill="none" stroke="#333" stroke-width="5"/>
+  <circle cx="200" cy="150" r="30" fill="none" stroke="#333" stroke-width="5"/>
+  <line x1="100" y1="150" x2="200" y2="150" stroke="#333" stroke-width="5"/>
+  <line x1="100" y1="150" x2="150" y2="100" stroke="#333" stroke-width="5"/>
+  <line x1="150" y1="100" x2="200" y2="150" stroke="#333" stroke-width="5"/>
+  <line x1="150" y1="100" x2="150" y2="70" stroke="#333" stroke-width="5"/>
+  <line x1="150" y1="70" x2="160" y2="75" stroke="#333" stroke-width="5"/> <!-- Handlebar -->
+
+  <!-- Pelican Body -->
+  <path d="M150,70 Q160,30 190,40 Q210,50 200,90 C190,110 160,120 150,110 Z" fill="#eee8aa" stroke="#333" stroke-width="2"/> <!-- Body -->
+  <path d="M190,40 Q200,20 220,30 L225,50 L200,70 Z" fill="#f0e68c" stroke="#333" stroke-width="2"/> <!-- Wing -->
+
+  <!-- Pelican Head and Beak -->
+  <circle cx="170" cy="60" r="15" fill="#eee8aa" stroke="#333" stroke-width="2"/> <!-- Head -->
+  <circle cx="175" cy="55" r="3" fill="#333"/> <!-- Eye -->
+  <path d="M180,65 C200,60 220,70 230,85 C220,95 200,90 180,80 L180,65 Z" fill="#fd7e14" stroke="#333" stroke-width="2"/> <!-- Upper Beak -->
+  <path d="M180,80 C200,85 220,90 230,100 C220,110 200,105 180,95 L180,80 Z" fill="#ffc107" stroke="#333" stroke-width="2"/> <!-- Pouch -->
+
+  <!-- Pelican Legs (simplified) -->
+  <line x1="150" y1="110" x2="140" y2="135" stroke="#fd7e14" stroke-width="3"/>
+  <line x1="140" y1="135" x2="130" y2="145" stroke="#fd7e14" stroke-width="3"/>
+  <line x1="150" y1="110" x2="160" y2="135" stroke="#fd7e14" stroke-width="3"/>
+  <line x1="160" y1="135" x2="170" y2="145" stroke="#fd7e14" stroke-width="3"/>
+</svg>`,
+            'restaurant.json': JSON.stringify({
+                city: "Kolkata",
+                lat: 22.5726,
+                long: 88.3639,
+                name: "Bhojohori Manna",
+                what_to_eat: "Authentic Bengali Thali, Daab Chingri, Kosha Mangsho"
+            }, null, 2),
+            'prediction.json': JSON.stringify({
+                rate: 0.035, // 3.5%
+                reason: "The Federal Reserve is likely to have completed its tightening cycle and potentially begun a modest easing cycle by late 2025, assuming inflation moderates further towards the 2% target and economic growth slows. A rate of 3.5% implies several cuts from current levels (mid-2024), but still above pre-pandemic lows, reflecting a 'higher for longer' sentiment in a new normal."
+            }, null, 2),
+            'LICENSE': `MIT License
+
+Copyright (c) 2024 Your Name (or Placeholder)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.`,
+            'uid.txt': `58970735258216353521648876151734924794422367521237947031712929334466118011719`
+        };
+
+        let currentFileId = null; // To keep track of the file being viewed/downloaded
+
+        async function viewFile(fileId) {
+            currentFileId = fileId;
+            const content = fileContents[fileId];
+            const modalTitle = document.getElementById('modalFileName');
+            const modalBody = document.getElementById('modalFileContent');
+            const downloadBtn = document.getElementById('downloadFileBtn');
+
+            modalTitle.textContent = fileId;
+            modalBody.innerHTML = ''; // Clear previous content
+
+            if (!content) {
+                modalBody.innerHTML = '<p class="text-danger">File content not found.</p>';
+                downloadBtn.style.display = 'none';
+                new bootstrap.Modal(document.getElementById('fileContentModal')).show();
+                return;
+            }
+
+            downloadBtn.style.display = 'inline-block'; // Show download button by default
+
+            if (fileId.endsWith('.md')) {
+                // Render Markdown
+                modalBody.innerHTML = marked.parse(content);
+            } else if (fileId.endsWith('.svg')) {
+                // Embed SVG directly
+                modalBody.innerHTML = content;
+            } else if (fileId.endsWith('.json')) {
+                // Prettify JSON and display
+                try {
+                    modalBody.innerHTML = `<pre>${JSON.stringify(JSON.parse(content), null, 2)}</pre>`;
+                } catch (e) {
+                    modalBody.innerHTML = `<pre>${content}</pre><p class="text-danger">Invalid JSON format.</p>`;
+                }
+            } else {
+                // Display plain text
+                modalBody.innerHTML = `<pre>${content}</pre>`;
+            }
+
+            new bootstrap.Modal(document.getElementById('fileContentModal')).show();
+        }
+
+        document.getElementById('downloadFileBtn').addEventListener('click', () => {
+            if (currentFileId) {
+                const content = fileContents[currentFileId];
+                if (content) {
+                    let mimeType;
+                    if (currentFileId.endsWith('.txt') || currentFileId.endsWith('.md') || currentFileId === 'LICENSE') {
+                        mimeType = 'text/plain';
+                    } else if (currentFileId.endsWith('.json')) {
+                        mimeType = 'application/json';
+                    } else if (currentFileId.endsWith('.svg')) {
+                        mimeType = 'image/svg+xml';
+                    } else {
+                        mimeType = 'application/octet-stream'; // Default for unknown types
+                    }
+
+                    const blob = new Blob([content], { type: mimeType });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = currentFileId;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+            }
+        });
+
+        // Handle URL parameters for direct file viewing (e.g., ?file=ashravan.txt)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const fileToOpen = params.get('file');
+            if (fileToOpen && fileContents[fileToOpen]) {
+                viewFile(fileToOpen);
+            }
+        });
+    </script>
+</body>
+</html>
